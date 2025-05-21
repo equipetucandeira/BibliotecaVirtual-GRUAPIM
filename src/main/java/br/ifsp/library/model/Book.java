@@ -13,8 +13,11 @@ public class Book {
 	private Long id;
 	@NotBlank(message = "Title is required")
 	private String title;
+	@NotBlank(message = "Description is required")
 	private String description;
+	@NotBlank(message = "Author is required")
 	private String author;
+	@NotBlank(message = "Quantity is required")
 	private Integer quantity;
 	
 	
