@@ -17,6 +17,15 @@ public class User {
 	private String email;
 	@NotBlank(message = "Password is required")
 	private String password;
+	private RoleType role;
+	
+	
+	public RoleType getRole() {
+		return role;
+	}
+	public void setRole(RoleType role) {
+		this.role = role;
+	}
 	public Long getId() {
 		return id;
 	}
