@@ -1,5 +1,6 @@
 package br.ifsp.library.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,7 @@ public class AuthenticationController {
 	}
 
 	@PostMapping("/login")
-	public String authenticate(@RequestBody @Valid AuthenticationDTO authenticationDto) {
-		return authenticationService.authenticate(authenticationDto);
+	public ResponseEntity<String> authenticate(@RequestBody @Valid AuthenticationDTO authenticationDto) {
+		return ResponseEntity.ok(authenticationService.authenticate(authenticationDto));
 	}
 }

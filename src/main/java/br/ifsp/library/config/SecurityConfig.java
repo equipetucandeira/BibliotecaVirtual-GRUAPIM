@@ -43,6 +43,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/users/register").permitAll().anyRequest().authenticated())
+                //.authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // Libera todas as rotas para debug
                 .oauth2ResourceServer(
                         conf -> conf.jwt(jwt -> jwt.jwtAuthenticationConverter(customJwtAuthenticationConverter)))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
