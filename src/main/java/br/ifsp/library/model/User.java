@@ -1,5 +1,9 @@
 package br.ifsp.library.model;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import br.ifsp.library.dto.authentication.UserResponseDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +29,6 @@ public class User {
 		
 	}
 	
-	
 	public User(String name, String email, String password, RoleType role) {
 		super();
 		this.name = name;
@@ -33,6 +36,18 @@ public class User {
 		this.password = password;
 		this.role = role;
 	}
+	
+	public UserResponseDTO transformDto(User user) {
+		UserResponseDTO dto = new UserResponseDTO(user.getName(), user.getEmail(), user.getRole());
+		return dto;
+	}
+	
+	public static List<UserResponseDTO> transformListDto(List<User> users){
+		return users.stream()
+				 .map(user -> new UserResponseDTO(user.getName(), user.getEmail(), user.getRole()))
+                .collect(Collectors.toList());
+	}
+	
 	public RoleType getRole() {
 		return role;
 	}
