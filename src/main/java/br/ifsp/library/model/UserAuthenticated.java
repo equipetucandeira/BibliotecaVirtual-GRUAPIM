@@ -22,7 +22,7 @@ public class UserAuthenticated implements UserDetails {
     //Roles provisória apenas
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(() -> "read");
+    	return List.of(() -> user.getRole().name());
     }
     
     @Override
