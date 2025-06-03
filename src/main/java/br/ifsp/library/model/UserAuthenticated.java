@@ -1,12 +1,15 @@
 package br.ifsp.library.model;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserAuthenticated implements UserDetails {
 
-    private final User user;
+   
+	private static final long serialVersionUID = 1L;
+	private final User user;
 
     public UserAuthenticated(User user) {
         this.user = user;
@@ -16,11 +19,10 @@ public class UserAuthenticated implements UserDetails {
         return user;
     }
     
+    //Roles provisória apenas
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoles().stream()
-                .map(role -> (GrantedAuthority) () -> role.getRoleName().name())
-                .toList();
+    	return List.of(() -> user.getRole().name());
     }
     
     @Override
