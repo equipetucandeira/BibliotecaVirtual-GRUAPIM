@@ -16,12 +16,12 @@ public class UserAuthenticated implements UserDetails {
         return user;
     }
     
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoles().stream()
-                .map(role -> (GrantedAuthority) () -> role.getRoleName().name())
-                .toList();
-    }
+    //@Override - Comentando para depois revermos
+    //public Collection<? extends GrantedAuthority> getAuthorities() {
+    //    return user.getRoles().stream()
+    //            .map(role -> (GrantedAuthority) () -> role.getRoleName().name())
+    //            .toList();
+    //}
     
     @Override
     public String getPassword() {
