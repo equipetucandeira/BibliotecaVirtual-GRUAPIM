@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.ifsp.library.model.User;
+import br.ifsp.library.dto.authentication.AuthenticationDTO;
 import br.ifsp.library.service.AuthenticationService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/auth")
 public class AuthenticationController {
 	
 	private final AuthenticationService authenticationService;
@@ -19,8 +19,8 @@ public class AuthenticationController {
 		this.authenticationService = authenticationService;
 	}
 
-	@PostMapping("/auth")
-	public String authenticate(@RequestBody @Valid User user) {
-		return authenticationService.authenticate(user);
+	@PostMapping("/login")
+	public String authenticate(@RequestBody @Valid AuthenticationDTO authenticationDto) {
+		return authenticationService.authenticate(authenticationDto);
 	}
 }
