@@ -18,17 +18,23 @@ import br.ifsp.library.service.ReportService;
 @RestController
 @RequestMapping("/api/report/")
 public class ReportController {
-	@Autowired
-	ReportService reportService;
-	
-	@GetMapping("/mostBorrowed")
-	public ResponseEntity<List<MostBorrowedDTO>> reportLoans(){
-		return ResponseEntity.ok(reportService.reportLoans());
-	}
-	
-	@GetMapping("/libUse")
-	public ResponseEntity<LibUseDTO> libUse(@RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-		    @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate){
-		return ResponseEntity.ok(reportService.reportLibUse(startDate, endDate));
-	}
+  @Autowired
+  ReportService reportService;
+
+  @GetMapping("/mostBorrowed")
+  public ResponseEntity<List<MostBorrowedDTO>> reportLoans() {
+    return ResponseEntity.ok(reportService.reportLoans());
+  }
+
+  /*
+   * @GetMapping("/libUse")
+   * public ResponseEntity<LibUseDTO>
+   * libUse(@RequestParam("startDate") @DateTimeFormat(iso =
+   * DateTimeFormat.ISO.DATE) LocalDate startDate,
+   * 
+   * @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+   * LocalDate endDate){
+   * return ResponseEntity.ok(reportService.reportLibUse(startDate, endDate));
+   * }
+   */
 }

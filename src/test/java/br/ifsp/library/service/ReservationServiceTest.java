@@ -5,8 +5,11 @@ import br.ifsp.library.model.Book;
 import br.ifsp.library.model.Reservation;
 import br.ifsp.library.model.User;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Optional;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,6 +17,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import br.ifsp.library.repository.BookRepository;
 import br.ifsp.library.repository.ReservationRepository;
 import br.ifsp.library.repository.UserRepository;
+
+import static org.junit.jupiter.api.Assertions.*; // assertNotNull, assertEquals
+import static org.mockito.ArgumentMatchers.any; // any(...)
+import static org.mockito.Mockito.*; // when(), verify(), times()
+
 
 @SpringBootTest
 public class ReservationServiceTest {
@@ -26,7 +34,7 @@ public class ReservationServiceTest {
   @MockBean
   private UserRepository userRepository;
 
-  @InjectMocks
+  @Autowired
   private ReservationService reservationService;
 
   @Test
@@ -47,7 +55,7 @@ public class ReservationServiceTest {
     when(userRepository.findByEmail("teste@g.com")).thenReturn(Optional.of(user));
     when(reservationRepository.countActiveReservationsByBookId(1L)).thenReturn(0L);
 
-    reservationService.reservBook(1L, "thiago");
+    reservationService.reservBook(1L, "teste@g.com");
 
     verify(reservationRepository).save(any(Reservation.class));
 

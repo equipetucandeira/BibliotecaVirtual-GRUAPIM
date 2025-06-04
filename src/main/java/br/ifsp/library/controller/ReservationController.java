@@ -44,15 +44,6 @@ public class ReservationController {
   @Autowired
   private ReservationService reservationService;
 
-  @GetMapping
-  public ResponseEntity<Page<Reservation>> getAllReservations(@RequestParam(defaultValue = "0") int page,
-      @RequestParam(defaultValue = "10") int size,
-      @RequestParam(defaultValue = "title") String sortBy) {
-    Page<Reservation> reservation = reservationService.getAllReservation(page, size, sortBy);
-    if (reservation.isEmpty())
-      return ResponseEntity.noContent().build();
-    return ResponseEntity.ok(reservation);
-  }
 
   @GetMapping("/{id}")
   public ResponseEntity<Reservation> getReservationById(@PathVariable Long id) {
