@@ -1,7 +1,7 @@
 package br.ifsp.library.model;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -55,5 +55,6 @@ public class UserAuthenticated implements UserDetails {
   public boolean isEnabled() {
     return true;
   }
+
 
 }
