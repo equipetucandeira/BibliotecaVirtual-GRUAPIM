@@ -1,5 +1,6 @@
 package br.ifsp.library.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,14 @@ public class ReportService {
 	    return reservationRepository.findMostBorrowedBooks();
 	}
 	
-	public LibUseDTO reportLibUse(){
+	public LibUseDTO reportLibUse(LocalDate startDate, LocalDate endDate) {
 	    LibUseDTO dto = new LibUseDTO();
-	    dto.setTotalLoans(reservationRepository.count());
-	    dto.setTotalUsers(reservationRepository.countDistinctUsers());
-	    MostBorrowedDTO mostBorrowed = reservationRepository.findMostBorrowedBooks().stream().findFirst().orElse(null);
-	    dto.setMostLoans(mostBorrowed);
+	    dto.setTotalLoans(reservationRepository.countByStartDateBetween(startDate, endDate));
+	    dto.setTotalUsers(reservationRepository.countDistinctUsersByStartDateBetween(startDate, endDate));
+	    
+	    List<MostBorrowedDTO> books = reservationRepository.findMostBorrowedBooksByPeriod(startDate, endDate);
+	    dto.setMostLoans(books.stream().findFirst().orElse(null));
+	    
 	    return dto;
 	}
 }
