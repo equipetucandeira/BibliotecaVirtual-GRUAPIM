@@ -41,13 +41,13 @@ public class User {
 	}
 	
 	public UserResponseDTO transformDto(User user) {
-		UserResponseDTO dto = new UserResponseDTO(user.getName(), user.getEmail(), user.getRole());
+		UserResponseDTO dto = new UserResponseDTO(user.getName(), user.getEmail(), user.getRole(), user.getId());
 		return dto;
 	}
 	
 	public static List<UserResponseDTO> transformListDto(List<User> users){
 		return users.stream()
-				 .map(user -> new UserResponseDTO(user.getName(), user.getEmail(), user.getRole()))
+				 .map(user -> new UserResponseDTO(user.getName(), user.getEmail(), user.getRole(), user.getId()))
                 .collect(Collectors.toList());
 	}
 	

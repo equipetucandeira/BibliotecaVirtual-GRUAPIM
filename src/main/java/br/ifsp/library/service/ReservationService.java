@@ -49,16 +49,16 @@ public class ReservationService {
     return reservation;
   }
 
-  public Page<Reservation> getUserReservations(int page, int size, String sortBy, String email) {
+  public Page<Reservation> getUserReservations(int page, int size, String sortBy, String name) {
     Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
-    Page<Reservation> reservation = reservationRepository.findByUserEmail(email, pageable);
+    Page<Reservation> reservation = reservationRepository.findByUserName(name, pageable);
     if (reservation == null) {
       return Page.empty(pageable);
     }
     return reservation;
 
   }
-
+  
   public Page<Reservation> getActiveReservations(boolean active, int page, int size, String sortBy) {
     Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
     return reservationRepository.findByActive(active, pageable);
@@ -70,7 +70,7 @@ public class ReservationService {
     return reservation;
   }
 
-  public void reservBook(Long bookId, String name) {
+  public Reservation reservBook(Long bookId, String name) {
     User user = userRepository.findByName(name)
         .orElseThrow(() -> new ResourceNotFoundException("Usuario nao encontrado"));
 
@@ -88,9 +88,10 @@ public class ReservationService {
     reservation.setBook(book);
     reservation.setUser(user);
     reservation.setStartDate(LocalDate.now());
+    reservation.setEndDate(LocalDate.now().plusDays(7));
+    reservation.setActive(true);
 
-    reservationRepository.save(reservation);
-
+    return reservationRepository.save(reservation);
   }
 
   public void devolution(Long reservationId) {

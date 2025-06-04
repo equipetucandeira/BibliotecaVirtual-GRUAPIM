@@ -43,4 +43,9 @@ public class AdminUserController {
 	  public ResponseEntity<UserResponseDTO> updateTask(@PathVariable Long id, @RequestBody @Valid UserRequestDTO dto) {
 	    return ResponseEntity.ok(userService.updateUser(id, dto));
 	  }
+	  
+	  @PatchMapping("/elevate/{id}")
+	  public ResponseEntity<UserResponseDTO> elevateUser(@PathVariable Long id) {
+	    return ResponseEntity.ok(userService.elevateUser(id));
+	  }
 }
