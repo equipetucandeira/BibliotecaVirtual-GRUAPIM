@@ -5,9 +5,10 @@ import java.time.Instant;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.stereotype.Service;
 
 import br.ifsp.library.model.User;
-
+@Service
 public class JwtService {
 
 	private final JwtEncoder jwtEncoder;

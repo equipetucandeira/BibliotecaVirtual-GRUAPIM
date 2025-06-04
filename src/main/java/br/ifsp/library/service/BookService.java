@@ -5,6 +5,7 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 import org.springframework.data.domain.PageImpl;
 
 import br.ifsp.library.repository.BookRepository;
@@ -15,7 +16,7 @@ import org.springframework.data.domain.Pageable;
 import br.ifsp.library.dto.BookResponseDTO;
 import br.ifsp.library.dto.BookRequestDTO;
 import br.ifsp.library.exception.ResourceNotFoundException;
-
+@Service
 public class BookService {
 
   @Autowired
