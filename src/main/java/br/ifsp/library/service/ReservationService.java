@@ -1,5 +1,6 @@
 package br.ifsp.library.service;
 
+import br.ifsp.library.dto.ReservationResponseDTO;
 import br.ifsp.library.exception.BadRequestException;
 import br.ifsp.library.exception.ResourceNotFoundException;
 import br.ifsp.library.model.User;
@@ -15,14 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 
-//import java.awt.print.Book;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import org.springframework.data.domain.PageImpl;
+
 import org.springframework.data.domain.PageRequest;
 
 @Service
@@ -37,8 +35,6 @@ public class ReservationService {
   @Autowired
   private BookRepository bookRepository;
 
-  @Autowired
-  private ModelMapper mapper;
 
   public Page<Reservation> getAllReservation(int page, int size, String sortBy) {
     Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
@@ -49,12 +45,13 @@ public class ReservationService {
     return reservation;
   }
 
-  public Page<Reservation> getUserReservations(int page, int size, String sortBy, String name) {
+  public Page<ReservationResponseDTO> getUserReservations(int page, int size, String sortBy, String name) {
     Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
-    Page<Reservation> reservation = reservationRepository.findByUserName(name, pageable);
+    Page<ReservationResponseDTO> reservation = reservationRepository.findByUserName(name, pageable);
     if (reservation == null) {
       return Page.empty(pageable);
     }
+    
     return reservation;
 
   }
@@ -70,7 +67,7 @@ public class ReservationService {
     return reservation;
   }
 
-  public Reservation reservBook(Long bookId, String name) {
+  public ReservationResponseDTO reservBook(Long bookId, String name) {
     User user = userRepository.findByName(name)
         .orElseThrow(() -> new ResourceNotFoundException("Usuario nao encontrado"));
 
@@ -90,8 +87,9 @@ public class ReservationService {
     reservation.setStartDate(LocalDate.now());
     reservation.setEndDate(LocalDate.now().plusDays(7));
     reservation.setActive(true);
-
-    return reservationRepository.save(reservation);
+    reservation.transformResponseDTO();
+    reservationRepository.save(reservation);
+    return reservation.transformResponseDTO();
   }
 
   public void devolution(Long reservationId) {
@@ -104,7 +102,7 @@ public class ReservationService {
 
     reservation.setActive(false);
     reservation.setEndDate(LocalDate.now());
-
     reservationRepository.save(reservation);
+    
   }
 }

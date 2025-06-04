@@ -1,6 +1,5 @@
 package br.ifsp.library.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;

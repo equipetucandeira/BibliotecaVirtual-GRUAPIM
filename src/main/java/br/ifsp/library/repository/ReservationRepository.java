@@ -2,13 +2,13 @@ package br.ifsp.library.repository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import br.ifsp.library.dto.MostBorrowedDTO;
+import br.ifsp.library.dto.ReservationResponseDTO;
 import br.ifsp.library.model.*;
 
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
   Page<Reservation> findByUserEmail(String email, Pageable pageable);
   
-  Page<Reservation> findByUserName(String name, Pageable pageable);
+  Page<ReservationResponseDTO> findByUserName(String name, Pageable pageable);
 
   Page<Reservation> findByActive(Boolean active, Pageable pageable);
 
