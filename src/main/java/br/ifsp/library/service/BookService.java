@@ -60,7 +60,7 @@ public class BookService {
 
   public BookResponseDTO getBookById(Long id) {
     Book book = bookRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("Task not found with ID: " + id));
+        .orElseThrow(() -> new ResourceNotFoundException("Book not found with ID: " + id));
     return toDtoWithAvailability(book);
   }
 

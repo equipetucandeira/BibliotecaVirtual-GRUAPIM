@@ -19,7 +19,7 @@ public class ReportService {
 	    return reservationRepository.findMostBorrowedBooks();
 	}
 	
-	public LibUseDTO reportLibUse(LocalDate startDate, LocalDate endDate) {
+	/*public LibUseDTO reportLibUse(LocalDate startDate, LocalDate endDate) {
 	    LibUseDTO dto = new LibUseDTO();
 	    dto.setTotalLoans(reservationRepository.countByStartDateBetween(startDate, endDate));
 	    dto.setTotalUsers(reservationRepository.countDistinctUsersByStartDateBetween(startDate, endDate));
@@ -28,5 +28,5 @@ public class ReportService {
 	    dto.setMostLoans(books.stream().findFirst().orElse(null));
 	    
 	    return dto;
-	}
+	}*/
 }
