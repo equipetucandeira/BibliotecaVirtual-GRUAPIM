@@ -1,6 +1,7 @@
 package br.ifsp.library.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,21 +25,36 @@ public class Book {
   @NotNull(message = "Quantity is required")
   private Integer quantity;
   @OneToMany(mappedBy = "book")
-  private ArrayList<Reservation> reservations;
+  private List<Reservation> reservations;
 
   public Book() {
 
   }
 
-  public Book(String title, String description, String author, Integer quantity) {
-    this.title = title;
-    this.description = description;
-    this.author = author;
-    this.quantity = quantity;
-    this.reservations = new ArrayList<>();
-  }
+  public Book(@NotBlank(message = "Title is required") String title,
+		@NotBlank(message = "Description is required") String description,
+		@NotBlank(message = "Author is required") String author,
+		@NotNull(message = "Quantity is required") Integer quantity, List<Reservation> reservations) {
+	this.title = title;
+	this.description = description;
+	this.author = author;
+	this.quantity = quantity;
+	this.reservations = reservations;
+}
 
-  public Long getId() {
+  public Book(@NotBlank(message = "Title is required") String title,
+		@NotBlank(message = "Description is required") String description,
+		@NotBlank(message = "Author is required") String author,
+		@NotNull(message = "Quantity is required") Integer quantity) {
+	this.title = title;
+	this.description = description;
+	this.author = author;
+	this.quantity = quantity;
+}
+
+
+
+public Long getId() {
     return id;
   }
 
