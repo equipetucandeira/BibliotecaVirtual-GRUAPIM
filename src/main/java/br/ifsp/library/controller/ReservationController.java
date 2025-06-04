@@ -44,7 +44,6 @@ public class ReservationController {
   @Autowired
   private ReservationService reservationService;
 
-
   @GetMapping("/{id}")
   public ResponseEntity<Reservation> getReservationById(@PathVariable Long id) {
     Reservation reservation = reservationService.getReservationById(id);
@@ -61,6 +60,13 @@ public class ReservationController {
     String username = authentication.getName();
     Page<Reservation> reservations = reservationService.getUserReservations(page, size, sortBy, username);
     return ResponseEntity.ok(reservations);
+  }
+
+  @PostMapping("/{reservationId}/devolution")
+  @PreAuthorize("isAuthenticated()")
+  public ResponseEntity<Void> returnBook(@PathVariable Long reservationId) {
+    reservationService.devolution(reservationId);
+    return ResponseEntity.noContent().build();
   }
 
   // @GetMapping("/catalog")
