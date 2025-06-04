@@ -70,8 +70,8 @@ public class ReservationService {
     return reservation;
   }
 
-  public void reservBook(Long bookId, String email) {
-    User user = userRepository.findByEmail(email)
+  public void reservBook(Long bookId, String name) {
+    User user = userRepository.findByName(name)
         .orElseThrow(() -> new ResourceNotFoundException("Usuario nao encontrado"));
 
     Book book = bookRepository.findById(bookId)
