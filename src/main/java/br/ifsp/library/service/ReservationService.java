@@ -58,7 +58,7 @@ public class ReservationService {
     return reservation;
 
   }
-
+  
   public Page<Reservation> getActiveReservations(boolean active, int page, int size, String sortBy) {
     Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
     return reservationRepository.findByActive(active, pageable);
@@ -90,7 +90,6 @@ public class ReservationService {
     reservation.setStartDate(LocalDate.now());
 
     reservationRepository.save(reservation);
-
   }
 
   public void devolution(Long reservationId) {
