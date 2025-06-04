@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ public class BookRequestDTO {
 	private String description;
 	@NotBlank(message = "Author is required")
 	private String author;
-	@NotBlank(message = "Quantity is required")
+	@NotNull(message = "Quantity is required")
 	private Integer quantity;
 	
 	
