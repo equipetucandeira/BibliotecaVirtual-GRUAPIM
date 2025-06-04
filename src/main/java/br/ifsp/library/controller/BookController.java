@@ -15,13 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-
-//import com.ifsp.task.dto.TaskRequestDTO;
-//import com.ifsp.task.dto.TaskResponseDTO;
-//import com.ifsp.task.service.TaskService;
 import br.ifsp.library.dto.BookResponseDTO;
-
+import br.ifsp.library.dto.ReservationResponseDTO;
 import br.ifsp.library.service.BookService;
 import br.ifsp.library.service.ReservationService;
 
@@ -61,13 +56,9 @@ public class BookController {
 
   @PreAuthorize("isAuthenticated()")
   @PostMapping("/{bookId}/reserve")
-  public ResponseEntity<?> reserveBook(
+  public ResponseEntity<ReservationResponseDTO> reserveBook(
       @PathVariable Long bookId,
       Authentication authentication) {
-
-    if (authentication == null || !authentication.isAuthenticated()) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
 
     String username = authentication.getName(); // ou pegar via JWT claims
     return ResponseEntity.ok(reservationService.reservBook(bookId, username));
