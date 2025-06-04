@@ -31,54 +31,36 @@ import br.ifsp.library.dto.BookRequestDTO;
 
 import br.ifsp.library.service.BookService;
 import br.ifsp.library.service.ReservationService;
+import br.ifsp.library.model.Reservation;
 
 @Validated
 @RestController
-@RequestMapping("/api/books")
-public class BookController {
-
-  @Autowired
-  private BookService bookService;
+@RequestMapping("/api/admin/reservations")
+public class AdminReservationController {
 
   @Autowired
   private ReservationService reservationService;
 
-  @PreAuthorize("isAuthenticated()")
-  @GetMapping("/{id}")
-  public ResponseEntity<BookResponseDTO> getBookById(@PathVariable Long id) {
-    BookResponseDTO book = bookService.getBookById(id);
-    return ResponseEntity.ok(book);
-  }
-
-  @GetMapping("/catalog")
-  public ResponseEntity<Page<BookResponseDTO>> getAvailableBooks(
-      @RequestParam(defaultValue = "0") int page,
+  @GetMapping
+  @PreAuthorize("hasRole('ADMIN')")
+  public ResponseEntity<Page<Reservation>> getAllReservations(@RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size,
       @RequestParam(defaultValue = "title") String sortBy) {
-    return ResponseEntity.ok(bookService.getAvailableBooks(page, size, sortBy));
+    Page<Reservation> reservation = reservationService.getAllReservation(page, size, sortBy);
+    if (reservation.isEmpty())
+      return ResponseEntity.noContent().build();
+    return ResponseEntity.ok(reservation);
   }
 
-  @GetMapping("/search")
-  public ResponseEntity<Page<BookResponseDTO>> getBooksByAuthor(@RequestParam String author,
-      @RequestParam(defaultValue = "0") int page,
-      @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "title") String sortBy) {
-    return ResponseEntity.ok(bookService.getBooksByAuthor(page, size, sortBy, author));
-
-  }
-
-  @PreAuthorize("isAuthenticated()")
-  @PostMapping("/{bookId}/reserve")
-  public ResponseEntity<?> reserveBook(
-      @PathVariable Long bookId,
-      Authentication authentication) {
-
-    if (authentication == null || !authentication.isAuthenticated()) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
-
-    String username = authentication.getName(); // ou pegar via JWT claims
-    reservationService.reservBook(bookId, username);
-    return ResponseEntity.ok().build();
+  @GetMapping("/active")
+  @PreAuthorize("hasRole('ADMIN')")
+  public ResponseEntity<Page<Reservation>> getActiveReservations(@RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "10") int size,
+      @RequestParam(defaultValue = "title") String sortBy, Boolean active) {
+    Page<Reservation> reservation = reservationService.getActiveReservations(active, page, size, sortBy);
+    if (reservation.isEmpty())
+      return ResponseEntity.noContent().build();
+    return ResponseEntity.ok(reservation);
   }
 
 }

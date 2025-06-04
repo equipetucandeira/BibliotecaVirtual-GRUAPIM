@@ -17,12 +17,18 @@ public class BookResponseDTO {
   private String description;
   private String author;
   private Integer quantity;
+  private Integer availableQuantity; // disponível para reserva
 
-  public BookResponseDTO(Book book) {
-	    this.id = book.getId();
-	    this.title = book.getTitle();
-	    this.description = book.getDescription();
-      this.author = book.getAuthor();
-      this.quantity = book.getQuantity();
-	}
+  public BookResponseDTO(Book book, long activeReservations) {
+    this.id = book.getId();
+    this.title = book.getTitle();
+    this.description = book.getDescription();
+    this.author = book.getAuthor();
+    this.quantity = book.getQuantity();
+    this.availableQuantity = book.getQuantity() - (int) activeReservations;
+  }
+
+  public Integer getAvailableQuantity(){
+    return availableQuantity;
+  }
 }
