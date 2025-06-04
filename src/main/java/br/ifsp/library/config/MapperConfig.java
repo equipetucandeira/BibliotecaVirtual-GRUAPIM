@@ -1,29 +1,21 @@
 package br.ifsp.library.config;
 
-/*import org.m;
-import org.modelmapper.PropertyMap;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.ifsp.task.dto.TaskRequestDTO;
-import com.ifsp.task.model.Task;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class MapperConfig {
 
   @Bean
   public ModelMapper modelMapper() {
-    ModelMapper modelMapper = new ModelMapper();
-
-    modelMapper.addMappings(new PropertyMap<TaskRequestDTO, Task>() {
-      @Override
-      protected void configure() {
-        skip(destination.getId());
-        skip(destination.getCreatedAt());
-      }
-    });
-
-    return modelMapper;
+    ModelMapper mapper = new ModelMapper();
+    return mapper;
   }
-}*/
+
+}
 
