@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Book {
@@ -20,7 +21,7 @@ public class Book {
   private String description;
   @NotBlank(message = "Author is required")
   private String author;
-  @NotBlank(message = "Quantity is required")
+  @NotNull(message = "Quantity is required")
   private Integer quantity;
   @OneToMany(mappedBy = "book")
   private ArrayList<Reservation> reservations;
