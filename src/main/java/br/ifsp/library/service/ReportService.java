@@ -1,12 +1,10 @@
 package br.ifsp.library.service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.ifsp.library.dto.LibUseDTO;
 import br.ifsp.library.dto.MostBorrowedDTO;
 import br.ifsp.library.repository.ReservationRepository;
 

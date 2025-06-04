@@ -1,7 +1,6 @@
 package br.ifsp.library.service;
 
 import br.ifsp.library.model.Book;
-import br.ifsp.library.model.Reservation;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

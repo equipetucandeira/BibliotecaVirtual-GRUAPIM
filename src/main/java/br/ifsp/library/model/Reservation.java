@@ -1,17 +1,14 @@
 package br.ifsp.library.model;
 
-import br.ifsp.library.model.User;
 
 import java.time.LocalDate;
 
-import br.ifsp.library.model.Book;
+import br.ifsp.library.dto.ReservationResponseDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
 @Entity
 public class Reservation {
   @Id
@@ -21,10 +18,8 @@ public class Reservation {
   private Book book;
   @ManyToOne
   private User user;
-
   private LocalDate startDate;
   private LocalDate endDate;
-
   private boolean active;
 
   public Reservation() {
@@ -37,6 +32,11 @@ public class Reservation {
     this.startDate = startDate;
     this.endDate = startDate.plusDays(7);
     this.active = true;
+  }
+  
+  public ReservationResponseDTO transformResponseDTO() {
+	  ReservationResponseDTO dto = new ReservationResponseDTO(this.book, this.startDate, this.endDate, this.active);
+	  return dto;
   }
 
   public Long getId() {
