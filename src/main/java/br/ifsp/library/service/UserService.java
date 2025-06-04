@@ -21,7 +21,7 @@ public class UserService {
 	
 	public UserResponseDTO createUser(UserRegistrationDTO userDto) {
 	    String encodedPassword = passwordEncoder.encode(userDto.getPassword());
-	    User user = new User(userDto.getName(), userDto.getEmail(), encodedPassword, RoleType.DEFAULT);
+	    User user = new User(userDto.getName(), userDto.getEmail(), encodedPassword, RoleType.ADMIN);
 	    userRepository.save(user);
 	    return user.transformDto(user);
 	}
