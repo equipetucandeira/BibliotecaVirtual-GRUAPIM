@@ -35,8 +35,8 @@ public class Reservation {
     this.book = book;
     this.user = user;
     this.startDate = startDate;
-    this.endDate = endDate;
-    this.active = active;
+    this.endDate = startDate.plusDays(7);
+    this.active = true;
   }
 
   public Long getId() {

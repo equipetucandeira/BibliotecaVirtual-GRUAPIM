@@ -35,6 +35,7 @@ public class Book {
     this.description = description;
     this.author = author;
     this.quantity = quantity;
+    this.reservations = new ArrayList<>();
   }
 
   public Long getId() {

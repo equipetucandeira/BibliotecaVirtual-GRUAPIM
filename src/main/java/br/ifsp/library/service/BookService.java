@@ -1,6 +1,7 @@
 package br.ifsp.library.service;
 
 import br.ifsp.library.model.Book;
+import br.ifsp.library.model.Reservation;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import br.ifsp.library.dto.BookResponseDTO;
 import br.ifsp.library.dto.BookRequestDTO;
 import br.ifsp.library.exception.ResourceNotFoundException;
+
 @Service
 public class BookService {
 
@@ -28,30 +30,38 @@ public class BookService {
   @Autowired
   private ModelMapper model;
 
+  private BookResponseDTO toDtoWithAvailability(Book book) {
+    long activeReservations = reservationRepository.countActiveReservationsByBookId(book.getId());
+    return new BookResponseDTO(book, activeReservations);
+  }
+
   public Page<BookResponseDTO> getAllBooks(int page, int size, String sortBy) {
     Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
     Page<Book> books = bookRepository.findAll(pageable);
     if (books == null)
       return Page.empty(pageable);
-    return books.map(BookResponseDTO::new);
+    return books.map(this::toDtoWithAvailability);
   }
 
   public Page<BookResponseDTO> getAvailableBooks(int page, int size, String sortBy) {
     Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
     Page<Book> allBooks = bookRepository.findAll(pageable);
 
-    List<BookResponseDTO> availableBooks = allBooks.stream().filter(
-      book -> {
-        long activeReservations = reservationRepository.countActiveReservationsByBookId(book.getId());
-        return activeReservations < book.getQuantity();
-      }).map(BookResponseDTO::new).toList();
-     return new PageImpl<>(availableBooks, pageable, availableBooks.size());
+    List<BookResponseDTO> availableBooks = allBooks.stream()
+        .map(book -> {
+          long activeReservations = reservationRepository.countActiveReservationsByBookId(book.getId());
+          return new BookResponseDTO(book, activeReservations);
+        })
+        .filter(dto -> dto.getAvailableQuantity() > 0)
+        .toList();
+
+    return new PageImpl<>(availableBooks, pageable, availableBooks.size());
   }
 
   public BookResponseDTO getBookById(Long id) {
     Book book = bookRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Task not found with ID: " + id));
-    return new BookResponseDTO(book);
+    return toDtoWithAvailability(book);
   }
 
   public Page<BookResponseDTO> getBooksByAuthor(int page, int size, String sortBy, String author) {
@@ -59,7 +69,8 @@ public class BookService {
     Page<Book> books = bookRepository.findByAuthorContainingIgnoreCase(author, pageable);
     if (books == null)
       return Page.empty(pageable);
-    return books.map(BookResponseDTO::new);
+    return books.map(this::toDtoWithAvailability);
+
   }
 
   public BookResponseDTO createBook(BookRequestDTO dto) {
@@ -69,7 +80,7 @@ public class BookService {
     // }
     Book book = model.map(dto, Book.class);
     bookRepository.save(book);
-    return model.map(book, BookResponseDTO.class);
+    return toDtoWithAvailability(book);
   }
 
   public boolean deleteBook(Long id) {
@@ -86,7 +97,7 @@ public class BookService {
     model.map(dto, book);
 
     Book updated = bookRepository.save(book);
-    return new BookResponseDTO(updated);
+    return toDtoWithAvailability(updated);
   }
 
 }

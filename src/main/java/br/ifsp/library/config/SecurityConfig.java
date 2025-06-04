@@ -26,45 +26,48 @@ import org.springframework.beans.factory.annotation.Value;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
-	@Value("${jwt.public.key}")
-    private RSAPublicKey key;
-    @Value("${jwt.private.key}")
-    private RSAPrivateKey priv;
-    
-    @Bean
-    public CustomJwtAuthenticationConverter customJwtAuthenticationConverter() {
-        return new CustomJwtAuthenticationConverter();
-    }
-    
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http,
-            CustomJwtAuthenticationConverter customJwtAuthenticationConverter) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-                //.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**").permitAll()
-                //        .requestMatchers("/api/users/register").permitAll().anyRequest().authenticated())
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // Libera todas as rotas para debug
-                .oauth2ResourceServer(
-                        conf -> conf.jwt(jwt -> jwt.jwtAuthenticationConverter(customJwtAuthenticationConverter)))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        return http.build();
-    }
-    
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-    
-    @Bean
-    JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withPublicKey(this.key).build();
-    }
-    
-    @Bean
-    JwtEncoder jwtEncoder() {
-        var jwk = new RSAKey.Builder(this.key).privateKey(this.priv).build();
-        var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
-        return new NimbusJwtEncoder(jwks);
-    }
-    
+
+  @Value("${jwt.public.key}")
+  private RSAPublicKey key;
+  @Value("${jwt.private.key}")
+  private RSAPrivateKey priv;
+
+  @Bean
+  public CustomJwtAuthenticationConverter customJwtAuthenticationConverter() {
+    return new CustomJwtAuthenticationConverter();
+  }
+
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http,
+      CustomJwtAuthenticationConverter customJwtAuthenticationConverter) throws Exception {
+    http.csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/api/auth/**", "/api/users/register").permitAll()
+            // .requestMatchers("/api/users/register").permitAll().anyRequest().authenticated())
+            .requestMatchers("/api/admin/**").hasRole("ADMIN")
+            .anyRequest().authenticated())
+        //.authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // Libera todas as rotas para debug
+        .oauth2ResourceServer(
+            conf -> conf.jwt(jwt -> jwt.jwtAuthenticationConverter(customJwtAuthenticationConverter)))
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+    return http.build();
+  }
+
+  @Bean
+  PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  JwtDecoder jwtDecoder() {
+    return NimbusJwtDecoder.withPublicKey(this.key).build();
+  }
+
+  @Bean
+  JwtEncoder jwtEncoder() {
+    var jwk = new RSAKey.Builder(this.key).privateKey(this.priv).build();
+    var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+    return new NimbusJwtEncoder(jwks);
+  }
+
 }
