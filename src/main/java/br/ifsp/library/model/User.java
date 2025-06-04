@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import br.ifsp.library.dto.authentication.UserResponseDTO;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,7 +25,8 @@ public class User {
 	private String email;
 	@NotBlank(message = "Password is required")
 	private String password;
-	private RoleType role;
+  @Enumerated(EnumType.STRING)
+  private RoleType role;
 	
 	public User() {
 		

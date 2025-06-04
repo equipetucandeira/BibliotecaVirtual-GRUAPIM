@@ -32,26 +32,25 @@ public class Book {
   }
 
   public Book(@NotBlank(message = "Title is required") String title,
-		@NotBlank(message = "Description is required") String description,
-		@NotBlank(message = "Author is required") String author,
-		@NotNull(message = "Quantity is required") Integer quantity, List<Reservation> reservations) {
-	this.title = title;
-	this.description = description;
-	this.author = author;
-	this.quantity = quantity;
-	this.reservations = reservations;
-}
+      @NotBlank(message = "Description is required") String description,
+      @NotBlank(message = "Author is required") String author,
+      @NotNull(message = "Quantity is required") Integer quantity, List<Reservation> reservations) {
+    this.title = title;
+    this.description = description;
+    this.author = author;
+    this.quantity = quantity;
+    this.reservations = reservations;
+  }
 
   public Book(@NotBlank(message = "Title is required") String title,
-		@NotBlank(message = "Description is required") String description,
-		@NotBlank(message = "Author is required") String author,
-		@NotNull(message = "Quantity is required") Integer quantity) {
-	this.title = title;
-	this.description = description;
-	this.author = author;
-	this.quantity = quantity;
-}
-
+      @NotBlank(message = "Description is required") String description,
+      @NotBlank(message = "Author is required") String author,
+      @NotNull(message = "Quantity is required") Integer quantity) {
+    this.title = title;
+    this.description = description;
+    this.author = author;
+    this.quantity = quantity;
+  }
 
 
 public Long getId() {
