@@ -21,4 +21,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>{
           "GROUP BY r.book.title " +
           "ORDER BY COUNT(r) DESC")
    List<MostBorrowedDTO> findMostBorrowedBooks();
+  
+  @Query("SELECT COUNT(DISTINCT r.user) FROM Reservation r")
+  Long countDistinctUsers();
 }

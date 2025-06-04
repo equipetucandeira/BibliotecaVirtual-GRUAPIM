@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.ifsp.library.dto.LibUseDTO;
 import br.ifsp.library.dto.MostBorrowedDTO;
 import br.ifsp.library.service.ReportService;
 
@@ -20,5 +21,10 @@ public class ReportController {
 	@GetMapping("/mostBorrowed")
 	public ResponseEntity<List<MostBorrowedDTO>> reportLoans(){
 		return ResponseEntity.ok(reportService.reportLoans());
+	}
+	
+	@GetMapping("/libUse")
+	public ResponseEntity<LibUseDTO> libUse(){
+		return ResponseEntity.ok(reportService.reportLibUse());
 	}
 }
