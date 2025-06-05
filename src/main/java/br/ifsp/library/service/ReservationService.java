@@ -10,8 +10,7 @@ import br.ifsp.library.repository.UserRepository;
 import br.ifsp.library.model.Book;
 import br.ifsp.library.model.Reservation;
 import org.springframework.stereotype.Service;
-
-
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -34,15 +33,18 @@ public class ReservationService {
 
   @Autowired
   private BookRepository bookRepository;
+  
+  @Autowired
+  private ModelMapper model;
 
 
-  public Page<Reservation> getAllReservation(int page, int size, String sortBy) {
+  public Page<ReservationResponseDTO> getAllReservation(int page, int size, String sortBy) {
     Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
     Page<Reservation> reservation = reservationRepository.findAll(pageable);
     if (reservation == null) {
       return Page.empty(pageable);
     }
-    return reservation;
+    return reservation.map(ReservationResponseDTO::new);
   }
 
   public Page<ReservationResponseDTO> getUserReservations(int page, int size, String sortBy, String name) {
@@ -56,9 +58,13 @@ public class ReservationService {
 
   }
   
-  public Page<Reservation> getActiveReservations(boolean active, int page, int size, String sortBy) {
+  public Page<ReservationResponseDTO> getActiveReservations(boolean active, int page, int size, String sortBy) {
     Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-    return reservationRepository.findByActive(active, pageable);
+    Page<Reservation> reservation = reservationRepository.findByActive(active, pageable);
+    if (reservation == null) {
+        return Page.empty(pageable);
+      }
+      return reservation.map(ReservationResponseDTO::new);
   }
 
   public Reservation getReservationById(Long id) {

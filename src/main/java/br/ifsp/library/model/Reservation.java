@@ -35,7 +35,7 @@ public class Reservation {
   }
   
   public ReservationResponseDTO transformResponseDTO() {
-	  ReservationResponseDTO dto = new ReservationResponseDTO(this.book, this.startDate, this.endDate, this.active);
+	  ReservationResponseDTO dto = new ReservationResponseDTO(this.id, this.book, this.startDate, this.endDate, this.active);
 	  return dto;
   }
 
