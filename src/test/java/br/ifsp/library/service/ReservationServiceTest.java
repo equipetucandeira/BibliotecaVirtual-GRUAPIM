@@ -1,6 +1,7 @@
-/*package br.ifsp.library.service;
+package br.ifsp.library.service;
 
 import br.ifsp.library.exception.BadRequestException;
+import br.ifsp.library.exception.ResourceNotFoundException;
 import br.ifsp.library.model.Book;
 import br.ifsp.library.model.Reservation;
 import br.ifsp.library.model.User;
@@ -51,10 +52,10 @@ public class ReservationServiceTest {
     user.setPassword("12345");
 
     when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
-    when(userRepository.findByEmail("teste@g.com")).thenReturn(Optional.of(user));
+    when(userRepository.findByName("teste")).thenReturn(Optional.of(user));
     when(reservationRepository.countActiveReservationsByBookId(1L)).thenReturn(0L);
 
-    reservationService.reservBook(1L, "teste@g.com");
+    reservationService.reservBook(1L, "teste");
 
     verify(reservationRepository).save(any(Reservation.class));
 
@@ -72,8 +73,8 @@ public class ReservationServiceTest {
     when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
     when(reservationRepository.countActiveReservationsByBookId(1L)).thenReturn(1L);
 
-    assertThrows(BadRequestException.class, () -> reservationService.reservBook(1L, "teste@g.com"));
+    assertThrows(ResourceNotFoundException.class, () -> reservationService.reservBook(1L, "teste"));
   }
 
 }
-*/
+
