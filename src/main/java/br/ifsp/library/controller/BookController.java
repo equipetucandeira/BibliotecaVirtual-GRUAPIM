@@ -1,5 +1,4 @@
-	package br.ifsp.library.controller;
-
+package br.ifsp.library.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +8,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.media.Content;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +36,14 @@ public class BookController {
   @Autowired
   private ReservationService reservationService;
 
+  @Operation(summary = "Busca o Livro pelo seu ID", description = "Retorna o livro buscado pelo ID")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content),
+      @ApiResponse(responseCode = "200", description = "Endereços retornados com sucesso"),
+      @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+      @ApiResponse(responseCode = "500", description = "Erro interno", content = @Content)
+  })
+
   @PreAuthorize("isAuthenticated()")
   @GetMapping("/{id}")
   public ResponseEntity<BookResponseDTO> getBookById(@PathVariable Long id) {
@@ -38,6 +51,13 @@ public class BookController {
     return ResponseEntity.ok(book);
   }
 
+  @Operation(summary = "Busca por livros disponiveis", description = "Retorna os livros disponiveis na biblioteca")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content),
+      @ApiResponse(responseCode = "200", description = "Endereços retornados com sucesso"),
+      @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+      @ApiResponse(responseCode = "500", description = "Erro interno", content = @Content)
+  })
   @GetMapping("/catalog")
   public ResponseEntity<Page<BookResponseDTO>> getAvailableBooks(
       @RequestParam(defaultValue = "0") int page,
@@ -46,6 +66,14 @@ public class BookController {
     return ResponseEntity.ok(bookService.getAvailableBooks(page, size, sortBy));
   }
 
+  @Operation(summary = "Busca os livros pelo autor", description = "Retorna o livro buscado pelo Autor")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content),
+      @ApiResponse(responseCode = "200", description = "Endereços retornados com sucesso"),
+      @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+      @ApiResponse(responseCode = "500", description = "Erro interno", content = @Content)
+  })
+
   @GetMapping("/search")
   public ResponseEntity<Page<BookResponseDTO>> getBooksByAuthor(@RequestParam String author,
       @RequestParam(defaultValue = "0") int page,
@@ -53,6 +81,14 @@ public class BookController {
     return ResponseEntity.ok(bookService.getBooksByAuthor(page, size, sortBy, author));
 
   }
+
+  @Operation(summary = "Reserva um livro especifico", description = "Retorna a reserva com sucesso")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content),
+      @ApiResponse(responseCode = "200", description = "Endereços retornados com sucesso"),
+      @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+      @ApiResponse(responseCode = "500", description = "Erro interno", content = @Content)
+  })
 
   @PreAuthorize("isAuthenticated()")
   @PostMapping("/{bookId}/reserve")
