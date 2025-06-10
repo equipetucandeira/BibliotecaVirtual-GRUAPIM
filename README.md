@@ -65,3 +65,18 @@ cd biblioteca-api
 
 # Compile e rode
 ./mvnw spring-boot:run
+```
+### 🔎 Documentação Swagger
+
+A documentação interativa da API está disponível via Swagger UI:
+
+📄 Acesse em:
+
+```
+http://localhost:8080/swagger-ui.html
+```
+
+```
+    Após fazer login e obter o token JWT, clique no botão "Authorize" e insira:
+    Bearer seu_token_aqui
+``
