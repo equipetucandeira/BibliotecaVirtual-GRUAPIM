@@ -60,7 +60,7 @@ Esta API foi criada como solução para o tema "Biblioteca Virtual com Emprésti
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/biblioteca-api.git
+git clone https://github.com/equipetucandeira/biblioteca-api.git
 cd biblioteca-api
 
 # Compile e rode
