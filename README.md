@@ -76,7 +76,7 @@ A documentação interativa da API está disponível via Swagger UI:
 http://localhost:8080/swagger-ui.html
 ```
 
-```
-    Após fazer login e obter o token JWT, clique no botão "Authorize" e insira:
-    Bearer seu_token_aqui
-``
+
+Após fazer login e obter o token JWT, clique no botão "Authorize" e insira:
+Bearer <seu_token_aqui>
+
