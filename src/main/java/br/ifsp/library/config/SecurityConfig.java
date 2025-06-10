@@ -43,10 +43,16 @@ public class SecurityConfig {
     http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/api/auth/**", "/api/users/register").permitAll()
+            .requestMatchers(
+                "/v3/api-docs/**",
+                "/swagger-ui/**",
+                "/swagger-ui.html")
+            .permitAll()
             // .requestMatchers("/api/users/register").permitAll().anyRequest().authenticated())
             .requestMatchers("/api/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated())
-        //.authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // Libera todas as rotas para debug
+        // .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // Libera todas
+        // as rotas para debug
         .oauth2ResourceServer(
             conf -> conf.jwt(jwt -> jwt.jwtAuthenticationConverter(customJwtAuthenticationConverter)))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

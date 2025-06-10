@@ -1,6 +1,5 @@
 package br.ifsp.library.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Page;
 
 import br.ifsp.library.service.ReservationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.media.Content;
 import br.ifsp.library.dto.ReservationResponseDTO;
 
 @Validated
@@ -23,6 +27,15 @@ public class AdminReservationController {
 
   @Autowired
   private ReservationService reservationService;
+
+  @Operation(summary = "Buscar por todas as reservas", description = "Retorna todas as reservas do sistema")
+  @ApiResponses(value = {
+
+      @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content),
+      @ApiResponse(responseCode = "200", description = "Endereços retornados com sucesso"),
+      @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+      @ApiResponse(responseCode = "500", description = "Erro interno", content = @Content)
+  })
 
   @GetMapping
   @PreAuthorize("hasRole('ADMIN')")
@@ -34,6 +47,14 @@ public class AdminReservationController {
       return ResponseEntity.noContent().build();
     return ResponseEntity.ok(reservation);
   }
+
+  @Operation(summary = "Buscar por todas as reservas ativas", description = "Retorna todas as reservas ativas do sistema")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "401", description = "Não autorizado", content = @Content),
+      @ApiResponse(responseCode = "200", description = "Endereços retornados com sucesso"),
+      @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+      @ApiResponse(responseCode = "500", description = "Erro interno", content = @Content)
+  })
 
   @GetMapping("/active")
   @PreAuthorize("hasRole('ADMIN')")
