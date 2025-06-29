@@ -1,0 +1,26 @@
+Teste de Exceção: Login com senha incorreta
+ID do Caso: TC-005
+Objetivo: Garantir que o sistema trate tentativas inválidas de login.
+Pré-condição: Conta de usuário existente.
+Passos:
+Acessar tela de login.
+Inserir e-mail válido e senha incorreta.
+
+✅ Resultado Esperado (Detalhado)
+O sistema deve negar o acesso ao usuário quando a senha estiver incorreta.
+Uma mensagem de erro clara e amigável deve ser exibida ao usuário, informando que a senha está incorreta ou que as credenciais são inválidas.
+O sistema não deve redirecionar o usuário para áreas restritas.
+Nenhum dado sensível deve ser exposto na resposta (por exemplo, não exibir senha digitada, ou dados do usuário).
+O sistema deve manter a estabilidade: não deve travar, recarregar indevidamente ou lançar erros inesperados no console/backend.
+O tempo de resposta deve ser rápido o suficiente (ex: inferior a 2 segundos) para não prejudicar a experiência do usuário.
+
+❌ Possíveis Defeitos (se encontrados)
+Caso o teste falhe, os principais tipos de defeito que podem ser identificados são:
+Tipo de Defeito	Descrição
+Validação ausente	O sistema permite login com senha incorreta.
+Mensagem inadequada	Mensagem genérica (“erro no login”) ou técnica demais (“HTTP 401”) sem informar o motivo.
+Falta de feedback visual	Nenhuma mensagem é exibida ao usuário.
+Exposição de dados sensíveis	A resposta inclui informações que não deveriam aparecer (ex: e-mail completo ou hash da senha).
+Comportamento inesperado	O sistema trava, recarrega a página indevidamente ou lança erro no console/backend.
+Performance ruim	O sistema demora excessivamente para responder após tentativa de login inválido.
+

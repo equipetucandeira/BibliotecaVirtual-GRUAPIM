@@ -1,0 +1,31 @@
+Teste Funcional 1: Reserva de livro
+
+ID do Caso: TC-001
+Objetivo: Verificar se o usuário consegue reservar um livro disponível.
+Pré-condição: Usuário autenticado; livro disponível.
+Passos:
+Acessar o catálogo.
+Selecionar um livro disponível.
+Clicar em "Reservar".
+Resultado esperado: 
+✅ Resultado Esperado (Detalhado)
+
+O sistema deve permitir que o usuário autenticado selecione um livro disponível e clique em “Reservar”.
+A ação deve resultar na criação de uma reserva associada ao usuário e ao livro selecionado.
+O status do livro (como quantidade ou disponibilidade) deve ser atualizado corretamente.
+O sistema deve exibir uma mensagem de sucesso clara, como “Livro reservado com sucesso” ou equivalente.
+O livro reservado deve deixar de estar disponível para nova reserva (caso não haja mais exemplares disponíveis).
+O tempo de resposta da operação deve ser aceitável (preferencialmente < 2 segundos).
+Não deve haver erros visuais, de banco de dados, ou comportamentos inesperados após a reserva.
+
+❌ Possíveis Defeitos (se encontrados)
+
+Falha de reserva	O clique no botão “Reservar” não gera nenhuma ação ou não cria a reserva no backend.
+Status não atualizado	O livro continua sendo exibido como disponível mesmo após a reserva.
+Mensagem ausente ou incorreta	O sistema não exibe mensagem de confirmação, ou mostra uma mensagem genérica (“erro inesperado”).
+Reserva duplicada	O mesmo livro é reservado mais de uma vez para o mesmo usuário.
+Quantidade incorreta	A contagem de exemplares disponíveis não é atualizada corretamente.
+Permissão incorreta	Usuário não autenticado consegue reservar um livro (falha de segurança).
+Erro de backend	O sistema lança exceções (500, 403, etc.) ao tentar reservar.
+Interface travada ou lentidão	A aplicação trava ou responde lentamente após clicar em “Reservar”.
+Feedback visual inadequado	O botão “Reservar” permanece clicável mesmo após reserva concluída, causando confusão.
