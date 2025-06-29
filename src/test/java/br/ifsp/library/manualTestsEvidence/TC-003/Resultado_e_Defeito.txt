@@ -1,0 +1,28 @@
+Teste de Usabilidade: Navegação pelo catálogo
+ID do Caso: TC-003
+Objetivo: Avaliar se o usuário consegue navegar pelo catálogo de forma intuitiva.
+Pré-condição: Usuário autenticado.
+Passos:
+Acessar a página inicial
+Utilizar filtro de busca por título, autor ou categoria.
+✅ Resultado Esperado (Detalhado)
+O sistema deve apresentar o catálogo de livros de forma clara e organizada, com campos visíveis de busca por título, autor e categoria.
+Ao aplicar qualquer filtro:
+Os resultados devem ser atualizados dinamicamente ou com um clique (dependendo da implementação).
+Devem ser exibidos apenas os livros que correspondem ao filtro aplicado.
+O sistema deve manter a consistência visual (sem recarregamentos erráticos, sem sumiço de elementos).
+O tempo de resposta deve ser satisfatório, idealmente inferior a 2 segundos entre a ação e o retorno dos dados.
+O layout deve ser intuitivo, com botões, campos e resultados organizados, legíveis e responsivos em diferentes tamanhos de tela.
+O usuário deve ser capaz de limpar os filtros facilmente e refinar a busca sem dificuldades.
+
+❌ Possíveis Defeitos (se encontrados)
+Tipo de Defeito	Descrição
+Filtros não funcionais	O sistema ignora os filtros aplicados e mostra resultados incorretos ou todos os livros.
+Resultados inconsistentes	O filtro exibe livros que não correspondem aos critérios aplicados.
+Mensagem ou retorno ausente	Ao aplicar filtro que não retorna nada, o sistema não informa ao usuário que “nenhum resultado foi encontrado”.
+Falta de feedback visual	O sistema não mostra carregamento nem indica que está processando a busca.
+Layout confuso ou sobrecarregado	Os elementos de filtro e resultado estão desorganizados ou sobrepostos.
+Falta de responsividade	O layout quebra em dispositivos móveis ou telas menores.
+Tempo de resposta lento	O sistema demora demais para retornar os resultados após o filtro (acima de 3–5 segundos).
+Erros de front-end ou console	A aplicação lança erros no navegador ao tentar filtrar.
+Falta de acessibilidade	Campos de busca ou botões não têm rótulos claros ou não são acessíveis por teclado.
