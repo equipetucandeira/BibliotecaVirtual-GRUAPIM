@@ -1,0 +1,28 @@
+Teste Não Funcional: Desempenho em múltiplas reservas
+ID do Caso: TC-004
+Objetivo: Verificar se o sistema mantém desempenho sob carga.
+Pré-condição: Sistema com muitos usuários ativos.
+Passos:
+	a. Realizar várias reservas simultâneas.
+✅ Resultado Esperado (Detalhado)
+O sistema deve ser capaz de processar múltiplas reservas simultaneamente (carga de usuários simulada ou real) sem apresentar:
+Erros de requisição (HTTP 5xx, timeouts).
+Lentidão perceptível para os usuários.
+Falhas em banco de dados (deadlocks, locks excessivos).
+Cada ação de reserva deve ser concluída com sucesso em menos de 2 segundos.
+O uso de CPU e memória deve permanecer dentro de limites aceitáveis para o ambiente.
+O sistema deve manter a integridade dos dados:
+Nenhuma reserva duplicada.
+Nenhum dado corrompido ou sobrescrito.
+Logs e monitoramento devem registrar as ações de forma consistente, sem falhas ou exceções não tratadas.
+
+❌ Possíveis Defeitos (se encontrados)
+Tipo de Defeito	Descrição
+Erro de concorrência	Reservas simultâneas causam registros duplicados, conflito de dados ou violação de integridade.
+Lentidão excessiva	O tempo de resposta ultrapassa os 2 segundos por requisição.
+Time-outs	Algumas requisições falham por tempo excedido durante picos de carga.
+Erros do servidor	O sistema retorna erros como 500 Internal Server Error, 503 Service Unavailable, etc.
+Falha de escalabilidade	O sistema trava ou não responde adequadamente ao aumento de usuários simultâneos.
+Logs inconsistentes	Ações não são registradas corretamente, dificultando auditoria.
+Problemas de fila/processamento	Reservas ficam presas ou processadas fora de ordem.
+Falha silenciosa	A API retorna status 200, mas a reserva não é efetivada.

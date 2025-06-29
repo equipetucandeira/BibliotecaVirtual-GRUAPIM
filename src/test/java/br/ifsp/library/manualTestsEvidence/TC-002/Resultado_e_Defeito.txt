@@ -1,0 +1,28 @@
+Teste Funcional 2: Devolução de livro
+ID do Caso: TC-002
+Objetivo: Confirmar se a devolução de um livro reservado funciona corretamente.
+Pré-condição: Livro reservado pelo usuário.
+Passos:
+Acessar lista de livros reservados.
+Clicar em "Devolver".
+✅ Resultado Esperado (Detalhado)
+
+O sistema deve permitir que o usuário veja sua lista de livros reservados, contendo informações claras dos títulos e status.
+Ao clicar em “Devolver” para um livro reservado: A reserva deve ser encerrada corretamente no banco de dados (status inativo, concluído, ou equivalente).
+O livro deve ser marcado como disponível novamente (incrementar a quantidade ou liberar nova reserva).
+Deve ser exibida uma mensagem de confirmação clara, como “Livro devolvido com sucesso”.
+O livro devolvido deve desaparecer da lista de livros reservados do usuário (ou ser marcado como devolvido).
+A interface deve permanecer responsiva e sem erros visuais ou lógicos.
+A operação deve ocorrer em tempo aceitável (preferencialmente em menos de 2 segundos).
+
+❌ Possíveis Defeitos (se encontrados)
+Tipo de Defeito	Descrição
+Devolução não processada	O clique em “Devolver” não gera alteração na reserva ou no status do livro.
+Reserva permanece ativa	Mesmo após devolução, a reserva continua marcada como ativa.
+Quantidade não atualizada	O estoque do livro não é incrementado corretamente após a devolução.
+Mensagem ausente ou errada	O sistema não exibe nenhuma mensagem ou mostra um alerta genérico (ex: “Erro desconhecido”).
+Erro ao clicar em "Devolver"	A interface trava ou lança erros (ex: HTTP 500 ou 403).
+Livro ainda aparece como reservado	O item continua visível na lista de livros reservados, causando confusão ao usuário.
+Devolução duplicada	Usuário consegue clicar várias vezes em “Devolver” para o mesmo livro.
+Permissão incorreta	Um usuário consegue devolver uma reserva que não pertence a ele.
+Problemas de desempenho	Lentidão ao carregar a lista de reservas ou ao processar a devolução.
