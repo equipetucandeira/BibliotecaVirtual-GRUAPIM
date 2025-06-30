@@ -38,6 +38,14 @@ public class GlobalExceptionHandler {
     return error;
   }
 
+  @ExceptionHandler(UnauthorizedException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public Map<String, String> handleBadRequestException(UnauthorizedException ex) {
+    Map<String, String> error = new HashMap<>();
+    error.put("error", ex.getMessage());
+    return error;
+  }
+
   @ExceptionHandler(ResourceNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
   public Map<String, String> handleResourceNotFoundException(ResourceNotFoundException ex) {
