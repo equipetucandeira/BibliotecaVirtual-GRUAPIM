@@ -22,7 +22,7 @@ public class AdminInitializer {
 
       if (existingAdmin.isEmpty()) {
         User admin = new User();
-        admin.setName("Admin");
+        admin.setName("admin");
         admin.setEmail("admin@ifsp.br");
         admin.setPassword(passwordEncoder.encode("admin123")); // criptografa a senha
         admin.setRole(role); // ou ENUM se estiver usando enum
