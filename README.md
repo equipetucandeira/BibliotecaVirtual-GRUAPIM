@@ -60,8 +60,23 @@ Esta API foi criada como solução para o tema "Biblioteca Virtual com Emprésti
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/biblioteca-api.git
+git clone https://github.com/equipetucandeira/biblioteca-api.git
 cd biblioteca-api
 
 # Compile e rode
 ./mvnw spring-boot:run
+```
+### 🔎 Documentação Swagger
+
+A documentação interativa da API está disponível via Swagger UI:
+
+📄 Acesse em:
+
+```
+http://localhost:8080/swagger-ui.html
+```
+
+
+Após fazer login e obter o token JWT, clique no botão "Authorize" e insira:
+Bearer <seu_token_aqui>
+
