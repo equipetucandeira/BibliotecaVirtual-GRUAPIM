@@ -5,15 +5,24 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.PageImpl;
 
 import br.ifsp.library.repository.BookRepository;
 import br.ifsp.library.repository.ReservationRepository;
+//import io.swagger.v3.oas.models.examples.Example;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import static org.springframework.data.domain.ExampleMatcher.StringMatcher.CONTAINING;
+
+
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import br.ifsp.library.dto.BookResponseDTO;
+import br.ifsp.library.dto.BookFilterDto;
 import br.ifsp.library.dto.BookRequestDTO;
 import br.ifsp.library.exception.ResourceNotFoundException;
 
@@ -69,7 +78,15 @@ public class BookService {
     if (books == null)
       return Page.empty(pageable);
     return books.map(this::toDtoWithAvailability);
+  }
 
+  public Page<BookResponseDTO> getBooksByTitle(int page, int size, String sortBy, String title) {
+    Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
+    Page<Book> books = bookRepository.findByTitleContainingIgnoreCase(title, pageable);
+    if (books == null) {
+      return Page.empty(pageable);
+    }
+    return books.map(this::toDtoWithAvailability);
   }
 
   public BookResponseDTO createBook(BookRequestDTO dto) {
@@ -97,6 +114,26 @@ public class BookService {
 
     Book updated = bookRepository.save(book);
     return toDtoWithAvailability(updated);
+  }
+
+  public Page<BookResponseDTO> filterBooks(BookFilterDto dto,
+      int page, int size, String sortBy) {
+
+    Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
+
+    Book book = new Book();
+    book.setTitle(dto.getTitle());
+    book.setAuthor(dto.getAuthor());
+
+    ExampleMatcher matcher = ExampleMatcher.matchingAll()
+        .withIgnoreNullValues() // ignora campos não enviados
+        .withStringMatcher(StringMatcher.CONTAINING) // LIKE %valor%
+        .withIgnoreCase();
+
+    Example<Book> example = Example.of(book, matcher);
+
+    return bookRepository.findAll(example, pageable)
+        .map(this::toDtoWithAvailability);
   }
 
 }

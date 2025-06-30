@@ -40,7 +40,6 @@ public class UserTryToLoginWithInvalidCredentials {
     assertThrows(UnauthorizedException.class,
         () -> authenticationService.authenticate(dto));
 
-
   }
 
 }
